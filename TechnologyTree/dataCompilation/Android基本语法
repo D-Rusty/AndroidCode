@@ -1,0 +1,58 @@
+1、横竖屏切换时候Activity的生命周期
+
+不设置Activityd饿android:configChanges时，切屏会重新掉哟过各个生命周期，切横屏时会执行一次，切竖屏时会执行两次
+设置Activity的android:configChanges=”orientation”时，切屏还是会调用各个生命周期，切换横竖屏只会执行一次
+设置Activity的android:configChanges=”orientation|keyboardHidden”时，切屏不会重新调用各个生命周期，只会执行onConfigurationChanged方法
+
+13.Android几种进程
+
+前台进程： 即与用户正在交互的Activity或者Activity用到的Service等，如果系统内存不足时前台进程是最后被杀死的
+可见线程：可以是处于暂停状态(onPause)的Activity或者绑定在其上的Service，即被用户可见，但由于失去了焦点而不能与用户交互
+服务进程：其中运行着使用startService方法启动的Service，虽然不被用户可见，但是却是用户关系的，例如用户正在非音乐界面听的音乐或者正在非下载页面自己下载的文件等，当系统要用空间运行前两者进程时才会被终止
+后台进程：其中运行着执行onStop方法而停止的程序，但是却不是用户当前关心的，例如后台挂着的QQ,这样的进程系统一旦没有内存就首先被杀死。
+空进程：不包含任何应用程序的程序组件的进程，这样的进程系统是一般不会让他存在的。
+如何避免后台进程被杀死？
+
+调用startForegound,让你的Service所在的进程成为前台进程
+Service的onStartCommand返回START_STICKY或START_REDELIVER_INTENT
+Service的onDestroy里面重新启动自己
+14.Activity启动模式
+
+standard:Activity的默认加载方式，该方法会通过跳转到一个新的Activity，同时将该实例压入到栈中(不管该Activity是否已经存在在Task栈中，都是采用new操作，生命周期从onCreate()开始)。例如：栈中顺序是A B C D,此时D通过Intent跳转到A，那么栈中结构就变成A B C D A,点击返回按钮的显示顺序是D C B A，依次摧毁。
+
+singleTop:singleTop模式下，当前Activity D位于栈顶的时候，如果通过Intent跳转到它本身的Activity(D)，那么不会重新创建一个新的D实例(走onNewIntent()),所以栈中的结构依次为A B C D,如果跳转到B，那么由于B不处于栈顶，所以会新建一个B实例并压入到栈中，结构就变成了A B C D B。应用实例：三条推送，点进去都是一个Activity，这肯定用singletop
+
+singleTask:singleTask模式下，Task栈中只能有一个对应的Activity实例。例如：Task栈1中结构为：A B C D。此时D通过Intent跳转到B（走onNewIntent()）,则栈的结构变成了:A,B。其中的C和D被栈弹出销毁了，也就是说位于B之上的实例都被销毁了。通常应用于首页，首页肯定在栈底部，也只能在栈底部。
+
+singleInstance:singleInstance模式下，会将打开的Activity压入一个新的任务栈中。例如：Task栈1中结构为：A B C,C通过Intent跳转到了D（D的模式为singleInstance），那么则会新建一个Task，栈1中结构依旧为A B C,栈2中结构为D。此时屏幕显示D，之后D通过Intent跳转到D，栈2不会压入新的D，所以两个栈中的情况没发生改变。如果D跳转到了C，那么就会根据C对应的launchMode在栈1中进行对应的操作，C如果为standard，那么D跳转到C，栈1的结构为A B C C ,此时点击返回按钮，还是在C，栈1的结构变为A B C,而不会回到D。
+
+launchMode为singleTask的时候，通过Intent启动到一个Activity，如果系统已经存在一个实例，系统就会将请求发送到这个实例上，但这个时候，系统就不会再调用通常情况下我们处理请求数据的onCreate方法，而不是调用onNewIntent方法。
+
+onSavedInstanceState的调用遵循一个重要原则，即当系统”未经你许可”时销毁了你的Activity，则onSavedInstanceState会被系统调用，这时系统的责任，因为它必须要提供一个机会让你保存你的数据，至于onRestoreInstanceState方法，需要注意的是，onSavedInstanceState方法和onRestoreInstanceState方法”不一定”是成对调用的。
+
+onRestoreInstanceState被调用的前提是，Activity A确实被系统销毁了，而如果仅仅是停留在有这种可能性的情况下，则该方法不会被调用，例如，当正在显示Activity A的时候，用户按下HOME键回到主界面，然后用户紧接着又返回到Activity A,这种情况下Activity A一般不会因为内存的原因被销毁，故Activity的onRestoreInstanceState方法不会被执行。
+
+另外，onRestoreInstanceStated的bundle参数也会传递到onCreate方法中，你也可以选择在onCreate方法中做数据还原。
+
+onSavedInstanceState(Bundle bundle)通常和onRestoreInstanceState(Bundle bundle)不会成对出现，onRestoreInstanceState这玩意不太好触发，给大家提个好办法，横竖屏切换的时候100%会触发。然后保存在onRestoreInstanceState bundle里面的数据，就是onCreate的那个参数bundle啦，要怎么恢复就看开发者了。
+
+
+一、Art上应用启动快，运行快，但是耗费更多存储空间，安装时间长，总的来说ART的功效就是"空间换时间"。
+
+    二、ART: Ahead of Time Dalvik: Just in Time
+
+    三、什么是Dalvik：Dalvik是Google公司自己设计用于Android平台的Java虚拟机。Dalvik虚拟机是Google等厂商合作开发的Android移动设备平台的核心组成部分之一，它可以支持已转换为.dex(即Dalvik Executable)格式的Java应用程序的运行，.dex格式是专为Dalvik应用设计的一种压缩格式，适合内存和处理器速度有限的系统。Dalvik经过优化，允许在有限的内存中同时运行多个虚拟机的实例，并且每一个Dalvik应用作为独立的Linux进程执行。独立的进程可以防止在虚拟机崩溃的时候所有程序都被关闭。
+
+    四、什么是ART:Android操作系统已经成熟，Google的Android团队开始将注意力转向一些底层组件，其中之一是负责应用程序运行的Dalvik运行时。Google开发者已经花了两年时间开发更快执行效率更高更省电的替代ART运行时。ART代表Android Runtime,其处理应用程序执行的方式完全不同于Dalvik，Dalvik是依靠一个Just-In-Time(JIT)编译器去解释字节码。开发者编译后的应用代码需要通过一个解释器在用户的设备上运行，这一机制并不高效，但让应用能更容易在不同硬件和架构上运行。ART则完全改变了这套做法，在应用安装的时候就预编译字节码到机器语言，这一机制叫Ahead-Of-Time(AOT)编译。在移除解释代码这一过程后，应用程序执行将更有效率，启动更快。
+
+    五、ART优点：
+      1.系统性能的显著提升
+      2.应用启动更快、运行更快、体验更流畅、触感反馈更及时
+      3.更长的电池续航能力
+      4.支持更低的硬件
+    六、ART缺点：
+      1.更大的存储空间占用，可能会增加10%-20%
+      2.更长的应用安装时间
+
+
+Context类本身是一个纯abstract类，它有两个具体的实现类：ContextImpl和ContextWrapper,其中ContextWrapper类只是

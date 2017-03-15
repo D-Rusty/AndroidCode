@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">TechnologyTree</string>
+    <string name="android_basic_name">AndroidBasic</string>
+    <string name="java_basic_name">JavaBasic</string>
+    <string name="spinner_basic">简单Spinner</string>
+    <string name="spinner_module_select">spinnerMode选择</string>
+    <string name="spinner_module_dropdown">dropdown模式</string>
+    <string name="spinner_module_dialog">dialog模式</string>
+
+    <string name="webview_name">WebViewExample</string>
+    <string name="textview_name">textViewExampleActivity</string>
+
+    <string name="notify_title">提示</string>
+    <string name="notify_msg">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
+
+
+    <!--字符串数组-->
+    <string-array name="spinner_basic_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+    <string name="title_activity_mqtt_example">MqttExampleActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--首页MainActivity 底部标题栏-->
+    <string-array name="main_bttom_item">
+        <item>Android</item>
+        <item>Java</item>
+        <item>Web</item>
+        <item>CI</item>
+    </string-array>
+
+    <!--首页MainActivity等待显示的fragment列表-->
+    <string-array name="main_fragment_list">
+        <item>com.project.onepice.basicproject.androidBasic.AndroidBasicFragment</item>
+        <item>com.project.onepice.basicproject.javaBasic.JavaBasicFragment</item>
+        <item>com.project.onepice.basicproject.webBasic.WebBasicFragment</item>
+        <item>com.project.onepice.basicproject.ciBasic.CIBasicFragment</item>
+    </string-array>
+
+    <!--Android 下面技术点-->
+    <string-array name="basic_android_item">
+        <item>com.project.onepice.basicproject.androidBasic.widget.imageview.GlideExampleFragment</item>
+        <item>com.project.onepice.basicproject.androidBasic.Animation.TweenExampleFragment</item>
+        <item>com.project.onepice.basicproject.androidBasic.Animation.FrameExampleFragment</item>
+        <item>com.project.onepice.basicproject.androidBasic.Animation.ObjectAnimatorExampleFragment</item>
+        <item>com.project.onepice.basicproject.androidBasic.Animation.InterpolatorExampleFragment</item>
+        <item>com.project.onepice.basicproject.androidBasic.Animation.ValueAnimatorExampleFragment</item>
+        <item>com.project.onepice.basicproject.androidBasic.Animation.SimpleExampleFragment</item>
+        <item>com.project.onepice.basicproject.androidBasic.Animation.LayoutTransitionExampleFragment</item>
+        <item>com.project.onepice.basicproject.androidBasic.map.BaiduMapExampleFragment</item>
+    </string-array>
+
+    <string name="activity_label">Example</string>
+    <string name="action_settings">Settings</string>
+    <string name="image_button_content_description">Change state of section</string>
+
+    <!--Glide Features Item-->
+    <string-array name="glide_features_item">
+        <item>从一个URL中加载图片</item>
+        <item>从资源中加载图片</item>
+        <item>从文件中加载图片</item>
+        <item>从Uri中加载</item>
+        <item>Glide和RecyclerView</item>
+        <item>Glide加载过程中图片与动画设置</item>
+        <item>图片大小设置</item>
+        <item>缓存设置</item>
+
+    </string-array>
+
+
+</resources>

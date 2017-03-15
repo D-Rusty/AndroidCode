@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="700"
+    android:fromDegrees="0"
+    android:toDegrees="360"
+    android:pivotY="50%"
+    android:pivotX="50%"
+    android:fillAfter="true"/>
+
+<!--
+  旋转动画
+    fromDegrees 动画开始时的角度正值代表顺时针方向度数，负值代码逆时针方向度数
+    toDegrees 结束时旋转到的角度位置，正值代表顺时针方向度数，负值代码逆时针方向度数
+    pivotX 属性为动画相对于物件的X坐标的开始位置
+    pivotY 属性为动画相对于物件的Y坐标的开始位置
+-->

@@ -1,0 +1,196 @@
+一、Java集合框架大致可以分为如下五个部分：List列表，Set集合，Map映射，迭代器、工具类
+二、集合类主要分为两大类：Collection和Map
+    Collection主要又分为两大部分：List和Set.
+      List接口通常表示一个列表(数组，队列，链表，栈等)，其中的元素可以重复，常用实现类为ArrayList和LinkedList,另外还有不常用的Vector.
+      Set接口通常表示一个集合，其中的元素不允许重复(通过hashcode和equals函数保证)
+      Map是一个映射接口，其中的每个元素都是一个key-value键值对，同样抽象类AbstractMap通过适配器模式实现了Map接口中的大部分函数，TreeMap、HashMap、WeakHashMap等实现类都通过
+      继承AbstractMap来实现，另外，不常用的HashTable直接实现了Map接口，它和Vector都是JDK1.0就引入的集合类。
+      Iterator是遍历集合的迭代器（不能遍历Map，只用来遍历Collection），Collection的实现类都实现了iterator()函数，它返回一个Iterator对象，用来遍历集合，
+      ListIterator则专门用来遍历List。而Enumeration则是JDK1.0时引入的，作用与Iterator相同，但它的功能比Iterator要少，它只能再Hashtable、Vector和Stack中使用。
+      Arrays和Collections是用来操作数组、集合的两个工具类，例如在ArrayList和Vector中大量调用了Arrays.Copyof()方法，而Collections中有很多静态方法可以返回各
+      集合类的synchronized版本，即线程安全的版本，当然了，如果要用线程安全的结合类，首选Concurrent并发包下的对应的集合类。
+
+三、ArrayList间接：
+     1.ArrayList是基于数组实现的，是一个动态数组，其容量能自动增长，类似于C语言中的动态申请内存，动态增长内存。
+        ArrayList不是线程安全的，只能在单线程环境下，多线程环境下可以考虑用collections.synchronizedList(List l)函数返回一个线程安全的ArrayList类，也可以使用concurrent并发包下的CopyOnWriteArrayList类。
+        ，ArrayList实现了Serializable接口，因此它支持序列化，能够通过序列化传输，实现了RandomAccess接口，支持快速随机访问，实际上就是通过下标序号进行快速访问，实现了Cloneable接口，能被克隆。
+     2.关于ArrayList几点总结：
+        1.注意其三个不同的构造方法，无参构造的ArrayList的容量默认为10，带有Collection参数的构造方法，将Collection转化为数组赋给ArrayList的实现数组elementData
+        2.注意扩充容量的方法ensureCapacity,ArrayList在每次增加元素时，都要调用该方法来确保足够的容量，当容量不足以容纳当前的元素个数时，就设置心的容量为旧的容量的1.5倍加1，如果设置后的新
+         容量还不够，则直接新容量设置为传入的参数，而后用Arrays.copyof()方法将元素拷贝到新的数组，从中可以看出，当容量不够时，每次 增加元素，都要将原来的元素拷贝到一个新的数组中，非常耗时，
+         建议使用LinkedList
+     3.ArrayList基于数组实现，可以通过下标索引直接查找到指定位置的元素，因此查找效率高，但每次插入或删除元素，就要大量地移动元素，插入删除元素的效率低。
+     4.在查找给定元素索引值等的方法中，源码都将该元素的值分为null和不为null两种情况处理，ArrayList中允许元素为null。
+
+四、LinkedList简介
+
+    LinkedList是基于双向循环链表（从源码中可以很容易看出）实现的，除了可以当作链表来操作外，它还可以当作栈，队列和双端队列来使用。
+
+    LinkedList同样是非线程安全的，只在单线程下适合使用。
+
+    LinkedList实现了Serializable接口，因此它支持序列化，能够通过序列化传输，实现了Cloneable接口，能被克隆。
+
+    LinkedList中允许元素为null
+
+    LinkedList是基于链表实现的，因此不存在容量不足的问题，所以这里没有扩容的方法。
+
+    LinkedList是基于链表实现的，因此插入删除效率高，查找效率低（虽然有一个加速动作）。
+
+
+五、Vector简介
+
+  Vector也是基于数组实现的，是一个动态数组，其容量能自动增长。
+
+  Vector是JDK1.0引入了，它的很多实现方法都加入了同步语句，因此是线程安全的（其实也只是相对安全，有些时候还是要加入同步语句来保证线程的安全），可以用于多线程环境。
+
+  Vector没有实现Serializable接口，因此它不支持序列化，实现了Cloneable接口，能被克隆，实现了RandomAccess接口，支持快速随机访问。
+
+  Vector的源码实现总体与ArrayList类似，关于Vector的源码，给出如下几点总结：
+
+  1、Vector有四个不同的构造方法。无参构造方法的容量为默认值10，仅包含容量的构造方法则将容量增长量（从源码中可以看出容量增长量的作用，第二点也会对容量增长量详细说）明置为0。
+
+  2、注意扩充容量的方法ensureCapacityHelper。与ArrayList相同，Vector在每次增加元素（可能是1个，也可能是一组）时，都要调用该方法来确保足够的容量。当容量不足以容纳当前的元素个数时，就先看构造方法中传入的容量增长量参数CapacityIncrement是否为0，如果不为0，就设置新的容量为就容量加上容量增长量，如果为0，就设置新的容量为旧的容量的2倍，如果设置后的新容量还不够，则直接新容量设置为传入的参数（也就是所需的容量），而后同样用Arrays.copyof()方法将元素拷贝到新的数组。
+
+  3、很多方法都加入了synchronized同步语句，来保证线程安全。
+
+  4、同样在查找给定元素索引值等的方法中，源码都将该元素的值分为null和不为null两种情况处理，Vector中也允许元素为null。
+
+  5、其他很多地方都与ArrayList实现大同小异，Vector现在已经基本不再使用。
+
+
+  六、HashMap简介
+
+  HashMap是基于哈希表实现的，每一个元素都是一个key-value对，其内部通过单链表解决冲突问题，容量不足（超过了阈值）时，同样会自动增长。
+
+  HashMap是非线程安全的，只是用于单线程环境下，多线程环境下可以采用concurrent并发包下的concurrentHashMap。
+
+  HashMap实现了Serializable接口，因此它支持序列化，实现了Cloneable接口，能被克隆。
+
+     1. 存储结构：哈希数组，数组的每个元素都是一个单链表的头节点，链表是用来解决冲突的，如果不同的key映射到了数组的同一位置处，就将其放入单链表中。
+     2. 数据结构：它的结构元素除了key、value、hash外，还有next，next指向下一个节点
+     3、HashMap共有四个构造方法。构造方法中提到了两个很重要的参数：初始容量和加载因子。这两个参数是影响HashMap性能的重要参数，其中容量表示哈希表中槽的数量（即哈希数组的长度），初始容量是创建哈希表时的容量（从构造函数中可以看出，如果不指明，则默认为16），加载因子是哈希表在其容量自动增加之前可以达到多满的一种尺度，当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行 resize 操作（即扩容）。
+     下面说下加载因子，如果加载因子越大，对空间的利用更充分，但是查找效率会降低（链表长度会越来越长）；如果加载因子太小，那么表中的数据将过于稀疏（很多空间还没用，就开始扩容了），对空间造成严重浪费。如果我们在构造方法中不指定，则系统默认加载因子为0.75，这是一个比较理想的值，一般情况下我们是无需修改的。
+     另外，无论我们指定的容量为多少，构造方法都会将实际容量设为不小于指定容量的2的次方的一个数，且最大值不能超过2的30次方
+     4、HashMap中key和value都允许为null。
+     5.hash.get()方法解析
+        首先，如果key为null，则直接从哈希表的第一个位置table[0]对应的链表上查找。记住，key为null的键值对永远都放在以table[0]为头结点的链表中，当然不一定是存放在头结点table[0]中。
+        如果key不为null，则先求的key的hash值，根据hash值找到在table中的索引，在该索引对应的单链表中查找是否有键值对的key与目标key相等，有就返回对应的value，没有则返回null。
+     6.hash.put()方法解析
+        如果key为null，则将其添加到table[0]对应的链表中
+        如果key不为null，则同样先求出key的hash值，根据hash值得出在table中的索引，而后遍历对应的单链表，如果单链表中存在与目标key相等的键值对，则将新的value覆盖旧的value，比将旧的value返回，如果找不到与目标key相等的键值对，或者该单链表为空，则将该键值对插入到改单链表的头结点位置（每次新插入的节点都是放在头结点的位置），该操作是有addEntry方法实现的，它的源码如下：
+        每次加入键值对时，都要判断当前已用的槽的数目是否大于等于阀值（容量*加载因子），如果大于等于，则进行扩容，将容量扩为原来容量的2倍。
+
+     7.关于扩容：
+        新建数组，拷贝内容，是一个非常耗时的操作
+     8.注意containsKey方法和containsValue方法。前者直接可以通过key的哈希值将搜索范围定位到指定索引对应的链表，而后者要对哈希数组的每个链表进行搜索。
+
+
+ 七、Hashtable简介
+
+    HashTable同样是基于哈希表实现的，同样每个元素都是key-value对，其内部也是通过单链表解决冲突问题，容量不足（超过了阈值）时，同样会自动增长。
+
+    Hashtable也是JDK1.0引入的类，是线程安全的，能用于多线程环境中。
+
+    Hashtable同样实现了Serializable接口，它支持序列化，实现了Cloneable接口，能被克隆。
+
+    总结：
+
+      针对Hashtable，我们同样给出几点比较重要的总结，但要结合与HashMap的比较来总结。
+
+      二者的存储结构和解决冲突的方法都是相同的。
+      HashTable在不指定容量的情况下的默认容量为11，而HashMap为16，Hashtable不要求底层数组的容量一定要为2的整数次幂，而HashMap则要求一定为2的整数次幂。
+      Hashtable中key和value都不允许为null，而HashMap中key和value都允许为null（key只能有一个为null，而value则可以有多个为null）。但是如果在Hashtable中有类似put(null,null)的操作，编译同样可以通过，因为key和value都是Object类型，但运行时会抛出NullPointerException异常，这是JDK的规范规定的。我们来看下ContainsKey方法和ContainsValue的源码：
+
+
+
+  八、多线程环境中集合类线程安全使用集合API
+                   在Collections类 中有多个静态方法，它们可以获取通过同步方法封装非同步集合而得到的集合：
+                   1.public static Collection synchronizedCollention(Collection c)
+                   2.public static List synchronizedList(list l)
+                   3.public static Map synchronizedMap(Map m)
+                   4.public static Set synchronizedSet(Set s)
+                   5.public static SortedMap synchronizedSortedMap(SortedMap sm)
+                   6.public static SortedSet synchronizedSortedSet(SortedSet ss)
+
+
+  九、说出几点 Java 中使用 Collections 的最佳实践(答案)
+                   这是我在使用 Java 中 Collectionc 类的一些最佳实践：
+                   a）使用正确的集合类，例如，如果不需要同步列表，使用 ArrayList 而不是 Vector。
+                   b）优先使用并发集合，而不是对集合进行同步。并发集合提供更好的可扩展性。
+                   c）使用接口代表和访问集合，如使用List存储 ArrayList，使用 Map 存储 HashMap 等等。
+                   d）使用迭代器来循环集合。
+                   e）使用集合的时候使用泛型
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

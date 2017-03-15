@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/top_title"/>
+    <ImageView
+        android:id="@+id/glide_imageView"
+        android:layout_width="match_parent"
+        android:layout_margin="15dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/glide_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:layout_height="match_parent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/glide_btn_recycler"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+
+
+
+
+
+

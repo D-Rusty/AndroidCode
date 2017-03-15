@@ -1,0 +1,68 @@
+流程一、mesarue()过程：
+  主要作用：为整个View树计算实际的大小，即设置实际的高(对应属性：mMeasuredHeight)和宽(对应属性：mMeasureWidth),每个View的控件的实际宽高都是由父视图和本身视图决定的。
+
+  具体的调用链如下：
+      ViewRoot根据对象的属性mView(其类型一般为ViewGroup)调用measure()方法去计算View树的大小
+      View/ViewGroup对象的onMeasure()方法，该方法实现的功能如下：
+      1.设置本View视图的最终大小，该功能的实现通过调用setMeasuredDimension()方法去设置实际的高(对应的属性：mMeasuredHeight)和宽(对应的属性：mMeasureWidth)
+      2.如果该View对象是个ViewGroup类型，需要重写该onMeasure()方法，对其子视图进行遍历的measure()过程
+      2.1 对每个子视图的measure()过程，是通过调用父类ViewGroup.java类里的measureChildWithMargins()方法去实现，该方法内部只是简单的调用了View对象的measure方法
+      3.整个measure调用流程就是个树形的递归过程
+
+流程二、layout布局过程：
+  主要作用：为将整个根据子视图的大小以及布局参数放到View合适位置
+
+  具体的调用链如下：
+      1. layout()方法会设置该View视图位于父视图的坐标轴，接下来回调onLayout()方法(如果该View是ViewGroup对象，需要实现该方法，对每个子视图进行布局)
+      2. 如果该View是个ViewGroup类型，需要遍历每个子视图childView,调用该子视图的layout()方法去设置它的坐标
+
+流程三、draw()绘制流程：
+   主要作用： 由ViewRoot对象的perform Traversals()方法调用Draw()方法发起绘制该View树，值得注意的是每次发起绘图时，并不会重新绘制每个View树的视图，而只会重新绘制
+             哪些"需要绘制"的视图，View类内部变量包含了一个标志位Drawn,当该视图需要重绘时，就会为该View添加该标志位。
+
+   调用流程： mView.draw()开始绘制，draw()方法实现的功能如下：
+            1、绘制该View的背景
+            2、为显示渐变框做一些准备操作
+            3、调用onDraw()方法绘制视图本身（每个View都需要重载该方法，ViewGroup不需要实现该方法）
+            4、调用dispatchDraw()方法绘制子视图(如果该View类型不为ViewGroup,既不包含子视图，不需要重载该方法)，值得说明的是，ViewGroup类已经为我们重写了dispatchDraw()的功能实现
+              ，应用程序一般不需要重写该方法，但可以重载父类函数实现具体的功能
+              4.1 dispatchDraw()方法内部会遍历每个子视图，调用drawChild()去重新回调每个子视图的draw()方法(注意，这个地方，“需要重绘” 的视图才会调用draw()方法)，值得说明的是，ViewGroup类已经为我们重写了dispatchDraw()的功能
+              实现，应用程序一般不需要重写该方法，但可以重载父类函数实现具体的功能
+            5、绘制滚动条
+
+
+  强调一点：
+     在这三个流程中，Google已经帮我们把Draw()过程框架已经写好了，自定义的ViewGroup只需要实现measure()和layout()过程即可
+
+  这三种情况，最终会直接或间接调用到三个函数，分别为invalidate(),requsetlaytout()以及requestFocus()，接着这三个函数最终会调用到ViewRoot中的schedulTraversale()方法，该函数然后发起一个异步消息，消息处理中调用
+  performTraverser()方法对整个View进行遍历
+
+
+    invalidate()方法 ：
+
+   说明：请求重绘View树，即draw()过程，假如视图发生大小没有变化就不会调用layout()过程，并且只绘制那些“需要重绘的”
+视图，即谁(View的话，只绘制该View ；ViewGroup，则绘制整个ViewGroup)请求invalidate()方法，就绘制该视图。
+
+     一般引起invalidate()操作的函数如下：
+            1、直接调用invalidate()方法，请求重新draw()，但只会绘制调用者本身。
+            2、setSelection()方法 ：请求重新draw()，但只会绘制调用者本身。
+            3、setVisibility()方法 ： 当View可视状态在INVISIBLE转换VISIBLE时，会间接调用invalidate()方法，
+                     继而绘制该View。
+            4 、setEnabled()方法 ： 请求重新draw()，但不会重新绘制任何视图包括该调用者本身。
+
+    requestLayout()方法 ：会导致调用measure()过程 和 layout()过程 。
+
+           说明：只是对View树重新布局layout过程包括measure()和layout()过程，不会调用draw()过程，但不会重新绘制
+任何视图包括该调用者本身。
+
+    一般引起invalidate()操作的函数如下：
+         1、setVisibility()方法：
+             当View的可视状态在INVISIBLE/ VISIBLE 转换为GONE状态时，会间接调用requestLayout() 和invalidate方法。
+    同时，由于整个个View树大小发生了变化，会请求measure()过程以及draw()过程，同样地，只绘制需要“重新绘制”的视图。
+
+    requestFocus()函数说明：
+
+          说明：请求View树的draw()过程，但只绘制“需要重绘”的视图。
+
+          
+

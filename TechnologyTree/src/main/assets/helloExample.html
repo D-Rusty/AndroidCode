@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>网上支付网关-深圳市商联商用科技有限公司</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <style>
+                                                                       body{margin:0; padding:0; height:100%; background:#FFF; font-family:"微软雅黑"; color:#666; font-size:14px;}
+                                                                       .tips-box{background:#e0e0e0; padding:5%;}
+                                                                       .zhifu-infor{background:#FFF; width:90%; margin:0 auto;}
+                                                                       .icon_zhifuz{background:url(/pcmp-server/template/images/icon_zhifuz.gif)  center no-repeat; height:40px; margin:0px auto; margin-top:20%}
+                                                                       .tankuang_text{ text-align:center; color:#000; padding:10px;font-size:20px;color:#333;}
+                                                                       </style>
+    <script type="text/javascript" src="https://res.slsy.com:8443/common/js/jquery.js"></script>
+</head>
+<body>
+<div class="tips-content">
+    <div class="icon_zhifuz"></div>
+    <div class="tankuang_text">
+        正在请求网关,请稍候....
+    </div>
+</div>
+<form action="https://101.231.204.80:5000/gateway/api/frontTransReq.do" method="post" name="send" id="inputForm"><input type="hidden" name=channelType value="08" ></input><input type="hidden" name=txnSubType value="01" ></input><input type="hidden" name=txnAmt value="5000" ></input><input type="hidden" name=backUrl value="http://wiki.slsy.com:3012/npay-notify/asyncNotice/100000000000000007/m_/PUCR16122200001158.text" ></input><input type="hidden" name=signature value="Ykxt9NFP3OVZHhV0g1WDTkyrOCrNNVhAxbsOkx5AuecVK6EDA5IZF5PgyUb+Fc/GlAuACjscsQxxPj0Hf5+6JeyXQcsl2iFMb6R03G1LG9bfRTs3nB5fy1pd0Sgo/YTdnu4VIFBYRsVc0ESVrCK9fQ8YabgZ7jXQo4RBjw/gTm8=" ></input><input type="hidden" name=merId value="861440348160244" ></input><input type="hidden" name=certId value="124876885185794726986301355951670452718" ></input><input type="hidden" name=bizType value="000000" ></input><input type="hidden" name=reqReserved value="{accessType=0&bizType=000000&channelType=08&encoding=UTF-8&merId=861440348160244&orderId=PUCR16122200001158&signMethod=01&txnSubType=01&txnTime=20161222143643&txnType=01&version=5.0.0}" ></input><input type="hidden" name=txnTime value="20161222143643" ></input><input type="hidden" name=orderDesc value="充电APP账户充值" ></input><input type="hidden" name=version value="5.0.0" ></input><input type="hidden" name=signMethod value="01" ></input><input type="hidden" name=encoding value="UTF-8" ></input><input type="hidden" name=orderId value="PUCR16122200001158" ></input><input type="hidden" name=txnType value="01" ></input><input type="hidden" name=frontUrl value="http://wiki.slsy.com:3012/npay-notify/frontNotice/PUCR16122200001158.html" ></input><input type="hidden" name=currencyCode value="156" ></input><input type="hidden" name=accessType value="0" ></input><input type="submit" value="submit" ></input></form><script type="text/javascript">window.onload = function(){ document.getElementById("inputForm").submit();}</script>
+</body>
+</html>

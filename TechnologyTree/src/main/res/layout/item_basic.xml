@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="5dp"
+    android:layout_margin="10dp"
+    android:background="#d2d2d2"
+    android:layout_height="45dp">
+
+    <TextView
+        android:id="@+id/item_basic_itme_tv"
+        android:layout_width="match_parent"
+        android:text="xxx"
+
+        android:gravity="left|center_vertical"
+        android:layout_height="45dp"
+        android:drawableRight="@drawable/selector_section_toggle"
+        android:layout_alignParentTop="true" />
+</RelativeLayout>
