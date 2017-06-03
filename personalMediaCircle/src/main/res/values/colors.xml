@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--<color name="wemedia_bg">#f0f0f6</color>-->
+
+    <color name="hint_text">#8C8C8C</color>
+
+    <color name="ml_gray">#ff9e9e9e</color>
+    <color name="ml_red">#ffff0000</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <!--#eb574d-->
+    <color name="black">#000000</color>
+    <!-- 亮蓝 -->
+    <!-- 框灰-->
+    <color name="white">#ffffff</color><!--白-->
+    <!--后台查看时标题栏颜色-->
+    <!--三级灰级  -->
+    <!--线灰 -->
+    <color name="relative_gray">#e5e5e5</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--按钮红-->
+    <!--男性-->
+    <!--女性 -->
+    <!--等级-->
+    <!--等级-->
+    <!--等级-->
+    <!--等级-->
+
+    <!--官方或个人-->
+    <color name="text_blue_one">#377CE4</color><!--用户名颜色-->
+    <color name="text_gray">#BABABA</color><!-- 字体灰-->
+    <color name="text_gray_one">#BABABA</color>
+    <!-- 字体红-->
+    <!--爱心豆颜色-->
+    <!--字体蓝 -->
+    <!--加圈审核  -->
+    <!--移除-->
+    <!--捐赠审核  -->
+    <!--字体半透明按压颜色-->
+    <color name="text_black">#363636</color><!-- 字体黑-->
+    <!-- 字体灰-->
+
+    <!--<color name="common_botton_bar_green">#46c01b</color>-->
+
+    <color name="gray_pressed">#b5b5b6</color>
+
+
+    <!--个人资料中，有数据时文字的颜色-->
+    <!--个人资料中，没有数据时文字的颜色-->
+
+    <!--腾讯IM-->
+    <!--<color name="background">#F9F7F8</color>-->
+</resources>

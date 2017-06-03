@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--正常情况下白色，按下显示灰色-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/relative_gray" android:state_pressed="true" />
+    <item android:drawable="@color/white" android:state_pressed="false" />
+</selector>

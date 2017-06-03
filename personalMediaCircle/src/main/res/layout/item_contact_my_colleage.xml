@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/item_contact_my_colleage_serion_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E8E8E8"
+        android:padding="2dp"
+        android:text="A"
+        android:textSize="12sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:id="@+id/item_contact_swipe_item"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            >
+
+            <RelativeLayout
+                android:id="@+id/act_contact_my_colleage_relativrlayout"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                >
+
+                <com.hudong.wemedia.ui.customView.CircleImageView
+                    android:id="@+id/item_contact_my_colleage_icon"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/item_contact_my_colleage_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/item_contact_my_colleage_icon"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/item_contact_my_colleage_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/item_contact_my_colleage_name"
+                    android:layout_below="@id/item_contact_my_colleage_name"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/text_black"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/item_contact_my_colleage_job"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_below="@id/item_contact_my_colleage_name"
+                    android:layout_toRightOf="@id/item_contact_my_colleage_company"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#99000000"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/item_contact_my_colleage_industry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/item_contact_my_colleage_name"
+                    android:layout_below="@id/item_contact_my_colleage_company"
+                    android:layout_marginTop="4dp"
+                    android:textColor="#99000000"
+                    android:textSize="12sp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_contact_my_friend_pop"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33000000"
+
+    >
+    <LinearLayout
+        style="@style/pop_lineargroup"
+
+        >
+
+        <LinearLayout
+            style="@style/pop_item_lineargroup"
+            >
+
+            <ImageView
+                style="@style/pop_item_icon"
+                android:background="@drawable/add_customer"/>
+
+            <TextView
+                android:id="@+id/pop_contact_my_friend_add_friend"
+                style="@style/pop_item_tv"
+                android:text="添加好友"
+                />
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/child_divider_horizontal"
+            />
+
+        <LinearLayout
+            style="@style/pop_item_lineargroup"
+            >
+
+            <ImageView
+                style="@style/pop_item_icon"
+                android:background="@drawable/search_scan"/>
+
+            <TextView
+                android:id="@+id/pop_contact_my_friend_scan"
+                style="@style/pop_item_tv"
+                android:text="扫一扫"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

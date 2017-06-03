@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><!--折叠图片-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--圆角5°，渐变开始颜色白色，结束颜色白色 从小到上渲染-->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="5dip" />
+            <gradient
+
+                android:angle="270"
+                android:centerY="0.75"
+                android:endColor="#FFFFFF"
+                android:startColor="#ffffff" />
+        </shape>
+    </item>
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="0dip" />
+                <gradient
+                    android:angle="270"
+                    android:centerY="0.75"
+                    android:endColor="#df0024"
+                    android:startColor="#df0024" />
+            </shape>
+        </clip>
+    </item>
+    <!---->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="5dip" />
+                <gradient
+                    android:angle="270"
+                    android:centerY="0.75"
+                    android:endColor="@color/text_blue_one"
+                    android:startColor="@color/text_blue_one" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>
+
+

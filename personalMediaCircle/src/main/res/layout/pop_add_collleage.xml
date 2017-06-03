@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_add_colleage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33000000"
+    >
+
+    <LinearLayout
+        style="@style/pop_lineargroup"
+        android:layout_width="150dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/linear_add_colleage"
+            style="@style/pop_item_lineargroup"
+            >
+
+            <ImageView
+                style="@style/pop_item_icon"
+                android:background="@drawable/add_customer"/>
+
+            <TextView
+                style="@style/pop_item_tv"
+                android:text="添加同事"
+                />
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/child_divider_horizontal"
+            />
+        <LinearLayout
+            android:id="@+id/pop_del_colleage"
+            style="@style/pop_item_lineargroup"
+            >
+
+            <ImageView
+                style="@style/pop_item_icon"
+                android:background="@drawable/icon_shift_member"/>
+
+            <TextView
+                style="@style/pop_item_tv"
+                android:text="转移同事"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

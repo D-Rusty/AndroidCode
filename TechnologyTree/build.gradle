@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "com.project.onepice.basicproject"
@@ -20,6 +20,13 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            jni.srcDirs = []
+        }
+    }
+
+
     lintOptions {
         abortOnError false
     }
@@ -29,7 +36,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:recyclerview-v7:23.1.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:design:23.1.0'
@@ -43,20 +50,6 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
 }
 
-//task compileCacherFile(type:Copy,dependsOn: build){
-//    doLast{
-//        java.io.File cacheFile=new File("src/main/assets/bundles");
-//        if (!cacheFile.exists()){
-//            cacheFile.mkdir()
-//        }
-//    }
-//    org.gradle.api.file.FileTree tree = fileTree(dir:'src/main/java');
-//    tree.include '**/*ExampleFragment.java'
-//    tree.each {File file->
-//        from file.absolutePath;
-//        into{"src/main/assets/cacheFile"}
-//    }
-//}
 
 
 
