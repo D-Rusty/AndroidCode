@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Weatherapp</string>
+    <string name="city_zipcode">City ZipCode</string>
+</resources>
