@@ -37,21 +37,21 @@ android {
         abortOnError false
     }
 
-    signingConfigs {
-        release {
-            keyAlias 'wemedia'
-            keyPassword 'wemedia'
-            storePassword 'wemedia'
-            storeFile file('../wemedia.jks')
-        }
-
-        debug {
-            keyAlias 'wemedia-debug'
-            keyPassword 'wemedia-debug'
-            storePassword 'wemedia-debug'
-            storeFile file('../wemedia-debug.jks')
-        }
-    }
+//    signingConfigs {
+//        release {
+//            keyAlias 'wemedia'
+//            keyPassword 'wemedia'
+//            storePassword 'wemedia'
+//            storeFile file('../wemedia.jks')
+//        }
+//
+//        debug {
+//            keyAlias 'wemedia-debug'
+//            keyPassword 'wemedia-debug'
+//            storePassword 'wemedia-debug'
+//            storeFile file('../wemedia-debug.jks')
+//        }
+//    }
 
 
     buildTypes {
@@ -65,7 +65,7 @@ android {
             zipAlignEnabled true
             //混淆
             minifyEnabled false
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
         }
@@ -77,7 +77,7 @@ android {
             //混淆
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
             buildConfigField("String", "BASE_HOST", "\"http://test2.wakebar.com\"")
             buildConfigField("String", "TENCENT_APP_ID", "\"1400028160\"")
             buildConfigField("String", "TENCENT_ACCOUNTTYPE", "\"11875\"")
