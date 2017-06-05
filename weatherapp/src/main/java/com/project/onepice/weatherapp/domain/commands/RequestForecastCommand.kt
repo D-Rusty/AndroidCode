@@ -16,6 +16,7 @@ class RequestForecastCommand(private val zipCode: Long, val forecastProvider: Fo
 
     override fun execute(): ForecastList {
         val forecastlist: ForecastList = forecastProvider.requestByZipCode(zipCode, DAYS)
+
         return forecastlist
     }
 }

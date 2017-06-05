@@ -32,8 +32,9 @@ public class DetailActivity : AppCompatActivity() , ToolbarManager{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initToolBar()
         setContentView(R.layout.activity_detail)
+        initToolBar()
+
         toolbarTitle = intent.getStringExtra(CITY_NAME)
         enableHomeAsUp { onBackPressed() }
         async {

@@ -24,7 +24,7 @@ class ServerDataMapper {
     }
 
     private fun convertForecastItemToDomain(forecast: Forecast) = with(forecast) {
-        ModelForecast(-1, dt, weather[0].description, temp.max.toInt(), temp.min.toInt(), generateIconUrl(weather[0].icon))
+        ModelForecast(dt, weather[0].description, temp.max.toInt(), temp.min.toInt(), generateIconUrl(weather[0].icon))
     }
 
     private fun generateIconUrl(iconCode: String): String = "http://openweathermap.org/img/w/$iconCode.png"

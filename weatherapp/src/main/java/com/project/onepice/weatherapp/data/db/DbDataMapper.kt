@@ -1,6 +1,5 @@
 package com.project.onepice.weatherapp.data.db
 
-import android.util.Log
 import com.project.onepice.weatherapp.domain.model.Forecast
 import com.project.onepice.weatherapp.domain.model.ForecastList
 
@@ -28,6 +27,6 @@ class DbDataMapper {
     }
 
     fun convertDayToDomain(dayForecast: DayForecast) = with(dayForecast) {
-        Forecast(-1, date, description, high, low, iconUrl)
+        Forecast(date, description, high, low, iconUrl)
     }
 }

@@ -19,8 +19,8 @@ class ForecastDbHelper(ctx: Context = MyApp.instance) : ManagedSQLiteOpenHelper(
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.createTable(CityForecastTable.NAME, true, CityForecastTable.ID to INTEGER , CityForecastTable.CITY to TEXT, CityForecastTable.COUNTRY to TEXT)
-        db?.createTable(DayForecastTable.NAME, true, DayForecastTable.ID to INTEGER, DayForecastTable.DATE to INTEGER, DayForecastTable.DESCRIPTION to TEXT, DayForecastTable.HIGH to INTEGER, DayForecastTable.LOW to INTEGER, DayForecastTable.ICON_URL to TEXT, DayForecastTable.CITY_ID to INTEGER)
+        db?.createTable(CityForecastTable.NAME, true, CityForecastTable.ID to INTEGER, CityForecastTable.CITY to TEXT, CityForecastTable.COUNTRY to TEXT)
+        db?.createTable(DayForecastTable.NAME, true, DayForecastTable.DATE to INTEGER, DayForecastTable.DESCRIPTION to TEXT, DayForecastTable.HIGH to INTEGER, DayForecastTable.LOW to INTEGER, DayForecastTable.ICON_URL to TEXT, DayForecastTable.CITY_ID to INTEGER)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {

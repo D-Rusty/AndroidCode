@@ -14,7 +14,6 @@ object CityForecastTable {
 
 object DayForecastTable {
     val NAME="DayForecast"
-    val ID="_id"
     val DATE="date"
     val DESCRIPTION="description"
     val HIGH="high"

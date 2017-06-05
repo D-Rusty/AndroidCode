@@ -36,9 +36,13 @@ class ForecastDb(val forecastDbHelper: ForecastDbHelper = ForecastDbHelper.insta
     fun saveForecast(forecast: ForecastList) = forecastDbHelper.use {
         clear(CityForecastTable.NAME)
         clear(DayForecastTable.NAME)
+
         with(dataMapper.convertFromDomain(forecast)) {
             insert(CityForecastTable.NAME, *map.toVarargArray())
-            dailyForecast.forEach { insert(DayForecastTable.NAME, *it.map.toVarargArray()) }
+            dailyForecast.forEach {
+                Log.i("、、、、", "saveForecast==" +  it.map)
+                insert(DayForecastTable.NAME, *it.map.toVarargArray())
+            }
         }
     }
 }

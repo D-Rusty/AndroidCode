@@ -1,7 +1,6 @@
 package com.project.onepice.weatherapp.ui
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,6 @@ class ForecastListAdapter(val weekForecast: ForecastList, val itemClick: (Foreca
     override fun getItemCount(): Int = weekForecast.size()
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        Log.i("testt", weekForecast.size().toString())
         holder?.bindForecast(weekForecast[position])
 
     }

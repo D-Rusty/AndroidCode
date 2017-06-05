@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import com.idescout.sql.SqlScoutServer
 import com.project.onepice.weatherapp.R
 import com.project.onepice.weatherapp.domain.commands.RequestForecastCommand
@@ -41,8 +40,7 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
 
 
     private fun loadForecast() = async(UI) {
-        val result = bg { RequestForecastCommand(94043).execute() }
-        Log.i("testt", result.await().toString())
+        val result = bg { RequestForecastCommand(zipCode).execute() }
         updateUI(result.await())
     }
 
@@ -50,7 +48,7 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
     private fun updateUI(weekForecast: ForecastList) {
 
         val adapter = ForecastListAdapter(weekForecast) {
-            startActivity<DetailActivity>(DetailActivity.ID to it.id, DetailActivity.CITY_NAME to weekForecast.city)
+            startActivity<DetailActivity>(DetailActivity.ID to weekForecast.id, DetailActivity.CITY_NAME to weekForecast.city)
         }
         forecast_list.adapter = adapter
         toolbarTitle = "${weekForecast.city} (${weekForecast.country})"

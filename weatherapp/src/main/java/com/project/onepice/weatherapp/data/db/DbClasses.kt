@@ -29,6 +29,7 @@ class DayForecast(var map: MutableMap<String, Any?>) {
 
     constructor(date: Long, description: String, high: Int, low: Int, iconUrl: String, cityId: Long)
             : this(HashMap()) {
+
         this.date = date
         this.description = description
         this.high = high
