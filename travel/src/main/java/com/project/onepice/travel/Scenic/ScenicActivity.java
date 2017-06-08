@@ -5,21 +5,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.idescout.sql.SqlScoutServer;
 import com.project.onepice.travel.R;
 import com.project.onepice.travel.SelectCity.SelectCityActivity;
 import com.project.onepice.travel.data.source.local.LocalDataRepository;
 import com.project.onepice.travel.data.source.local.cityInfo.CityInfoLocalDataSource;
 import com.project.onepice.travel.data.source.local.scenic.ScenicLocalDataSource;
 import com.project.onepice.travel.util.CallBack.ICallBackScenicFragmen;
+import com.project.onepice.travel.widgets.CheckPermissionsActivity;
 
-public class ScenicActivity extends AppCompatActivity implements ICallBackScenicFragmen {
+public class ScenicActivity extends CheckPermissionsActivity implements ICallBackScenicFragmen {
 
     private Button location;
 
@@ -29,27 +30,31 @@ public class ScenicActivity extends AppCompatActivity implements ICallBackScenic
 
     private ScenicFragment scenicFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initFragment(getIntent());
-
-
+        SqlScoutServer.create(this, getPackageName());
     }
 
     private void initFragment(Intent intent) {
+
         scenicFragment = (ScenicFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
         if (scenicFragment == null) {
             scenicFragment = ScenicFragment.newInstance("SCENIC_FRAGMENT");
+            transaction.add(R.id.contentFrame, scenicFragment);
+        } else {
+            transaction.replace(R.id.contentFrame, scenicFragment);
+
         }
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.contentFrame, scenicFragment);
         transaction.commit();
-
         new ScenicPresenter(getApplicationContext(), new LocalDataRepository(new CityInfoLocalDataSource(getApplicationContext()),
                 new ScenicLocalDataSource(getApplicationContext())), scenicFragment);
 
@@ -91,12 +96,11 @@ public class ScenicActivity extends AppCompatActivity implements ICallBackScenic
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2000 && (data.getStringExtra("city") != null)) {
-            scenicFragment.setLocation("select:"+data.getStringExtra("city"));
+            scenicFragment.setLocation("select:" + data.getStringExtra("city"));
         }
-
     }
 
     @Override
@@ -106,4 +110,16 @@ public class ScenicActivity extends AppCompatActivity implements ICallBackScenic
         intent.putExtra("location", location);
         startActivityForResult(intent, 2000);
     }
+
+
+    @Override
+    public void checkInfoResult(boolean isCheckId) {
+        if (isCheckId) {
+            if (scenicFragment != null) {
+                scenicFragment.initData();
+            }
+        }
+    }
+
+
 }

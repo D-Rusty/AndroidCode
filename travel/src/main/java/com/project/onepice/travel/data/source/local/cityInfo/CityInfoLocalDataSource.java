@@ -129,6 +129,7 @@ public class CityInfoLocalDataSource implements CityInfoDataSource {
     @Override
     public boolean insertCityInfo(ArrayList<ContentValues> arrayList) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db.delete(CityInfoPersistenceContract.CityInfoEntry.TABLE_NAME, null, null);
         long resultCount = 0;
         db.beginTransaction();
         for (int i = 0; i < arrayList.size(); i++) {

@@ -17,13 +17,15 @@ import com.project.onepice.travel.widgets.CheckPermissionsActivity;
 
 public class HomePageActivity extends CheckPermissionsActivity {
 
+    HomePageFragment homePageFragment = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
 
-        HomePageFragment homePageFragment = (HomePageFragment) getSupportFragmentManager()
+        homePageFragment = (HomePageFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
         if (homePageFragment == null) {
             homePageFragment = HomePageFragment.newInstance("HOMEPAGE_FRAGMENT");
@@ -34,6 +36,17 @@ public class HomePageActivity extends CheckPermissionsActivity {
         new HomePagePresenter(getApplicationContext(), new LocalDataRepository(new CityInfoLocalDataSource(getApplicationContext()),
                 new ScenicLocalDataSource(getApplicationContext())), homePageFragment, homePageFragment);
 
+    }
+
+
+
+    @Override
+    public void checkInfoResult(boolean isCheckId) {
+        if (isCheckId) {
+            if (homePageFragment != null) {
+                homePageFragment.initData();
+            }
+        }
     }
 }
 

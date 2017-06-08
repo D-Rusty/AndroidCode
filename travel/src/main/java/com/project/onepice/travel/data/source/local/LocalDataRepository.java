@@ -30,7 +30,7 @@ public class LocalDataRepository implements LocalDataSource {
     @Override
     public boolean initLocalSqlite() {
         return cityInfoDataSource.insertCityInfo(cityInfoDataSource.initSqliteInsertData())
-                      && scenicDataSource.insertScenicInfo(scenicDataSource.initSqliteInsertData());
+                && scenicDataSource.insertScenicInfo(scenicDataSource.initSqliteInsertData());
     }
 
     @Override

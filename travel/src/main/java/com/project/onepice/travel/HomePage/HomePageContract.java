@@ -1,7 +1,5 @@
 package com.project.onepice.travel.HomePage;
 
-import android.app.Activity;
-
 import com.project.onepice.travel.BasePresenter;
 import com.project.onepice.travel.BaseView;
 
@@ -10,7 +8,7 @@ import com.project.onepice.travel.BaseView;
  */
 
 public interface HomePageContract {
-    int REQUEST_PHONE_PERMISSIONS = 0;
+
 
     interface View extends BaseView<Presenter> {
         void showDiaolog();
@@ -18,15 +16,12 @@ public interface HomePageContract {
         void dissMissDiaolog();
 
         void destroyActivity();
+
+        void initData();
     }
 
     interface Presenter extends BasePresenter {
         //初始化数据库
         void initSqlite();
-
-        /**
-         * 检查所需权限
-         */
-        void checkPermission(Activity activity);
     }
 }

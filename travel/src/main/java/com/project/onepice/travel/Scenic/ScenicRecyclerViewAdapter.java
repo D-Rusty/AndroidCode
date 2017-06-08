@@ -22,6 +22,11 @@ import java.util.ArrayList;
 public class ScenicRecyclerViewAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
     private Context context;
+
+    public ArrayList<Scenic> getScenicArrayList() {
+        return scenicArrayList;
+    }
+
     private ArrayList<Scenic> scenicArrayList;
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
@@ -29,8 +34,9 @@ public class ScenicRecyclerViewAdapter extends RecyclerView.Adapter implements V
         this.scenicArrayList = scenicArrayList;
     }
 
-    public ScenicRecyclerViewAdapter(Context context) {
+    public ScenicRecyclerViewAdapter(Context context,OnRecyclerViewItemClickListener listener) {
         this.context = context;
+        this.mOnItemClickListener = listener;
     }
 
 
@@ -43,10 +49,6 @@ public class ScenicRecyclerViewAdapter extends RecyclerView.Adapter implements V
         if (mOnItemClickListener != null) {
             mOnItemClickListener.onItemClick(v, (Scenic) v.getTag());
         }
-    }
-
-    public void setmOnItemClickListener(OnRecyclerViewItemClickListener listener) {
-        this.mOnItemClickListener = listener;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

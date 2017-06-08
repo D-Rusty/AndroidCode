@@ -42,6 +42,7 @@ public class ScenicLocalDataSource implements ScenicDataSource {
     @Override
     public boolean insertScenicInfo(ArrayList<ContentValues> arrayList) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db.delete(ScenicPersistenceContract.ScenicEntity.TABLE_NAME, null, null);
         long resutCode = 0;
         db.beginTransaction();
         for (int i = 0; i < arrayList.size(); i++) {
@@ -57,7 +58,6 @@ public class ScenicLocalDataSource implements ScenicDataSource {
     @Override
     public ArrayList<Scenic> queryScenic(String city_id, int pageNumber) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         ArrayList<Scenic> queryResult = new ArrayList<>();
         Cursor cursor = db.query(ScenicPersistenceContract.ScenicEntity.TABLE_NAME,
                 null, ScenicPersistenceContract.ScenicEntity.COLUMN_NAME_CITY_ID + "=?", new String[]{city_id}, null, null, null, 0 + "," + (pageNumber + 20));

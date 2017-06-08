@@ -45,6 +45,9 @@ public class ScenicFragment extends Fragment implements ScenicContract.View {
     @BindView(R.id.progress_layout)
     LinearLayout progress_layout;
 
+    @BindView(R.id.no_data)
+    TextView no_data;
+
     private ScenicRecyclerViewAdapter adpater;
 
     private LinearLayoutManager linearLayoutManager;
@@ -58,7 +61,7 @@ public class ScenicFragment extends Fragment implements ScenicContract.View {
     private int lastVisibleItem;
 
     private boolean isLocationAuto = true;
-    private boolean isScollRefursh=false;
+    private boolean isScollRefursh = false;
     private ICallBackScenicFragmen callBack;
 
 
@@ -86,38 +89,54 @@ public class ScenicFragment extends Fragment implements ScenicContract.View {
         return view;
     }
 
-    @Override
-    public void onResume() {
+
+    public void initData() {
         if (isLocationAuto) {
             //获取城市位置
-
             mPresenter.getCityId("");
         }
-
-        super.onResume();
     }
-
 
     @Override
     public void refresh(ArrayList<Scenic> scenicsArray) {
         progress_layout.setVisibility(View.GONE);
+
+        if (adpater == null) {
+            adpater = new ScenicRecyclerViewAdapter(getContext(),new ScenicRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, Scenic data) {
+                    Intent intent = new Intent(getContext(), ScenicDetailsActivity.class);
+                    intent.putExtra("scenic", (Scenic) view.getTag());
+                    getContext().startActivity(intent);
+                }
+            });
+            scenicRecyclerView.setAdapter(adpater);
+        }
+
         if (scenicsArray == null || scenicsArray.size() == 0) {
             Snackbar.with(getContext()) // context
                     .text("没有更多数据了") // text to display
                     .duration(Snackbar.SnackbarDuration.LENGTH_SHORT) // make it shorter
                     .show(getActivity()); // activity where it is displayed
         } else {
-            if (adpater == null) {
-                adpater = new ScenicRecyclerViewAdapter(getContext());
-                scenicRecyclerView.setAdapter(adpater);
+            if (adpater.getScenicArrayList() != null) {
+                adpater.getScenicArrayList().addAll(scenicsArray);
+            } else {
+                adpater.setScenicArrayList(scenicsArray);
             }
+            adpater.notifyDataSetChanged();
 
         }
-        if (!(isScollRefursh&&scenicsArray.size()==0)){
-            adpater.setScenicArrayList(scenicsArray);
+
+
+        if (adpater.getScenicArrayList() == null || adpater.getScenicArrayList().size() == 0) {
+            no_data.setVisibility(View.VISIBLE);
+            scenicRecyclerView.setVisibility(View.GONE);
+        } else {
+            no_data.setVisibility(View.GONE);
+            scenicRecyclerView.setVisibility(View.VISIBLE);
         }
 
-        adpater.notifyDataSetChanged();
 
     }
 
@@ -129,7 +148,14 @@ public class ScenicFragment extends Fragment implements ScenicContract.View {
         scenicRecyclerView.setHasFixedSize(true);
 
         if (adpater == null) {
-            adpater = new ScenicRecyclerViewAdapter(getContext());
+            adpater = new ScenicRecyclerViewAdapter(getContext(), new ScenicRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, Scenic data) {
+                    Intent intent = new Intent(getContext(), ScenicDetailsActivity.class);
+                    intent.putExtra("scenic", (Scenic) view.getTag());
+                    getContext().startActivity(intent);
+                }
+            });
         }
         scenicRecyclerView.setAdapter(adpater);
 
@@ -152,7 +178,7 @@ public class ScenicFragment extends Fragment implements ScenicContract.View {
 
                 if ((visisbleItemCount > 0 && newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItem) >= totalItemCount - 1)) {
                     mPresenter.getScenicList(getLocation(), lastVisibleItem + "");
-                    isScollRefursh=true;
+                    isScollRefursh = true;
                 }
 
             }
@@ -161,17 +187,10 @@ public class ScenicFragment extends Fragment implements ScenicContract.View {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (adpater != null) {
+                    adpater = null;
+                }
                 callBack.startCity(getLocation());
-            }
-        });
-
-
-        adpater.setmOnItemClickListener(new ScenicRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, Scenic data) {
-                Intent intent = new Intent(getContext(), ScenicDetailsActivity.class);
-                intent.putExtra("scenic", (Scenic) view.getTag());
-                getContext().startActivity(intent);
             }
         });
 
@@ -186,14 +205,14 @@ public class ScenicFragment extends Fragment implements ScenicContract.View {
 
     @Override
     public void setLocation(String locationText) {
-       if (locationText.contains("select:")){
-           isScollRefursh=false;
-           location.setText(locationText.substring(locationText.indexOf(":")+1,locationText.length()));
-           mPresenter.getCityId(locationText.substring(locationText.indexOf(":")+1,locationText.length()));
-           isLocationAuto = false;
-       }else {
-           location.setText(locationText);
-       }
+        if (locationText.contains("select:")) {
+            isScollRefursh = false;
+            location.setText(locationText.substring(locationText.indexOf(":") + 1, locationText.length()));
+            mPresenter.getCityId(locationText.substring(locationText.indexOf(":") + 1, locationText.length()));
+            isLocationAuto = false;
+        } else {
+            location.setText(locationText);
+        }
     }
 
     @Override

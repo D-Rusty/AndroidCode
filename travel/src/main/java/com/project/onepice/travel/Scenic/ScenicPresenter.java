@@ -48,11 +48,16 @@ public class ScenicPresenter implements ScenicContract.Presenter {
         @Override
         protected CityInfo doInBackground(String... params) {
             String localCityName;
-            if (params[0].equals("")){
+            if (params[0].equals("")) {
                 AMapLocation location = Utils.getMapCityName(context);
-                 localCityName = location.getErrorCode() == 0 ? location.getCity() : location.getErrorInfo();
-            }else {
-                localCityName=params[0];
+                if (location != null) {
+                    localCityName = location.getErrorCode() == 0 ? location.getCity() : location.getErrorInfo();
+                } else {
+                    localCityName = "深圳";
+                }
+
+            } else {
+                localCityName = params[0];
             }
 
             CityInfo cityInfo = localDataSource.queryCityCode(localCityName);
